@@ -1,3 +1,4 @@
+import axios from 'axios';
 <template>
     <div class="min-h-screen flex justify-center items-center bg-gray-light">
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-md">
@@ -13,18 +14,23 @@
 
 <script>
 export default {
-    data() {
-        return {
-            transaction: {
-                title: '',
-                amount: 0,
-            },
-        };
+  data() {
+    return {
+      transaction: {
+        title: '',
+        amount: 0,
+      },
+    };
+  },
+  methods: {
+    async submitTransaction() {
+      try {
+        const response = await axios.post('http://localhost:8000/api/transactions/', this.transaction);
+        console.log('成功提交:', response.data);
+      } catch (error) {
+        console.error('提交失敗:', error);
+      }
     },
-    methods: {
-        submitTransaction() {
-            console.log('提交交易:', this.transaction);
-        },
-    },
+  },
 };
 </script>
